@@ -1,0 +1,221 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="CoffeePods.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    toolkit:TiltEffect.IsTiltEnabled="True"
+    shell:SystemTray.IsVisible="False">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <phone:PhoneApplicationPage.Resources>
+        <Style x:Key="AboutFont" TargetType="TextBlock" >
+            <Setter Property="FontFamily" Value="/Fonts/Pistara.otf#Pistara"></Setter>
+            <Setter Property="FontSize" Value="38"></Setter>
+            <Setter Property="Foreground" Value="#643B0F"></Setter>
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+        </Style>
+        <Style x:Key="AboutFontSmaller" TargetType="TextBlock" >
+            <Setter Property="FontFamily" Value="/Fonts/Pistara.otf#Pistara"></Setter>
+            <Setter Property="FontSize" Value="30"></Setter>
+            <Setter Property="Foreground" Value="#643B0F"></Setter>
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+        </Style>
+        <DataTemplate x:Key="podListItemTemplate">
+            <ListBoxItem>
+                <Grid Margin="12,0,12,18">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Image VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Height="52" Width="52" Source="{Binding ListImageUri}" toolkit:SlideInEffect.LineIndex="2" />
+
+                    <Border Margin="20,0" Background="#643B0F" Width="42" Height="42" Grid.Column="1" Grid.Row="0" toolkit:SlideInEffect.LineIndex="1">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="Beige" Style="{StaticResource ListItemStyleSmall}" Text="{Binding Strength}"></TextBlock>
+                    </Border>
+
+                    <TextBlock VerticalAlignment="Center" Margin="12,0" Grid.Row="0" Grid.Column="2" Text="{Binding Name}" Style="{StaticResource ListItemStyle}" toolkit:SlideInEffect.LineIndex="0" />
+                </Grid>
+            </ListBoxItem>
+        </DataTemplate>
+        <DataTemplate x:Key="podHeaderTemplate">
+            <TextBlock Text="{Binding Key}" Margin="12,0,12,12" Style="{StaticResource AboutFont}"></TextBlock>
+        </DataTemplate>
+
+    </phone:PhoneApplicationPage.Resources>
+    <Grid x:Name="LayoutRoot" Background="#EDE3C9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- LOCALIZATION NOTE:
+            To localize the displayed strings copy their values to appropriately named
+            keys in the app's neutral language resource file (AppResources.resx) then
+            replace the hard-coded text value between the attributes' quotation marks
+            with the binding clause whose path points to that string name.
+
+            For example:
+
+                Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+
+            This binding points to the template's string resource named "ApplicationTitle".
+
+            Adding supported languages in the Project Properties tab will create a
+            new resx file per language that can carry the translated values of your
+            UI strings. The binding in these examples will cause the value of the
+            attributes to be drawn from the .resx file that matches the
+            CurrentUICulture of the app at run time.
+         -->
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="18,0,0,0" Orientation="Horizontal">
+            <Viewbox>
+                <Grid>
+                    <Path Data="M35.118965,28.74496C34.298526,28.768117 33.174667,29.547024 32.376423,30.41742 31.267023,31.625706 29.957122,35.154364 30.764423,35.763657 31.570423,36.367849 35.681121,32.987689 36.109523,32.1283 36.539222,31.271409 36.587322,30.037225 35.905025,29.104735 35.714588,28.842557 35.440006,28.735899 35.118965,28.74496z M19.449775,18.302163C19.905664,18.306734 20.381567,18.405703 20.696666,18.451234 26.160284,19.258549 30.009195,21.323666 30.009195,24.71679 30.009195,24.797599 30.001396,24.89135 30.001396,24.979909 30.093895,25.831468 30.647197,26.029348 31.5209,26.029348 32.477901,26.029348 35.662815,24.5501 37.825622,26.128347 39.892025,27.641344 40.922035,30.542439 39.086025,33.946033 37.617321,36.664728 32.488403,39.492924 31.1681,40.500723 29.489694,41.77932 27.88809,42.617918 27.131588,43.828817 26.665386,44.578815 26.031383,44.492914 25.772184,45.073614 25.324279,46.482512 24.91418,47.565908 24.589878,48.117907 22.957075,50.886103 20.295566,51.995501 15.002647,51.997999 9.7135302,51.995501 7.0494624,50.886103 5.4166461,48.117907 3.7825419,45.344416 -3.7364305E-07,29.206442 2.8421709E-14,24.71679 -3.7364305E-07,21.870604 2.7070383,19.959048 6.8047119,18.938173 7.4752437,18.771485 8.261746,18.466798 8.9205586,18.818422 9.4674402,19.110169 9.8789412,19.966798 9.4583403,20.537287 9.0976893,21.021486 8.3294359,21.099606 7.7864653,21.242976 5.8333288,21.750725 4.6145745,22.461664 4.6145741,23.253353 4.6145745,24.800099 9.2539393,26.052788 14.977848,26.052788 20.701866,26.052788 25.341182,24.800099 25.341182,23.253353 25.341182,22.232604 23.717476,21.719475 22.970073,21.474665 22.100271,21.188166 21.200569,21.000726 20.296966,20.854796 19.666662,20.753356 18.605558,20.555357 18.221359,19.966798 18.00136,19.633488 18.101659,19.034607 18.32296,18.719485 18.55801,18.387423 18.993887,18.297594 19.449775,18.302163z M12.771993,0C16.086017,1.3097878 17.992447,4.0703011 18.857107,6.5415792 18.973014,6.8514442 19.051118,7.1561289 19.099222,7.4634333 19.501649,9.6300268 18.165559,12.226293 17.321802,15.208043 16.983179,16.465821 16.942876,17.7289 17.135589,18.92938 17.328302,20.119559 18.121357,21.434537 17.892141,22.663717 17.500213,24.78088 14.091082,23.6168 12.933504,22.947611 8.1154171,20.158559 9.77313,14.106561 11.907334,10.387724 13.943972,6.8306341 15.811299,4.9269171 12.771993,0z" Stretch="Uniform" 
+                          Fill="#B7521E" Width="48" Height="48" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                        <Path.RenderTransform>
+                            <TransformGroup>
+                                <TransformGroup.Children>
+                                    <RotateTransform Angle="0" />
+                                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                                </TransformGroup.Children>
+                            </TransformGroup>
+                        </Path.RenderTransform>
+                    </Path>
+                </Grid>
+            </Viewbox>
+
+            <TextBlock Text="COFFEE PODS" FontFamily="/Fonts/CFXerographyDemo-Regular.ttf#CF Xerography Demo" 
+                       FontSize="42" Foreground="#B7521E" Margin="12,12,0,0"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,0,12,0">
+
+            <phone:Pivot>
+                <phone:Pivot.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" Foreground="#643B0F" FontSize="52" FontFamily="/Fonts/CFXerographyDemo-Regular.ttf#CF Xerography Demo"></TextBlock>
+                    </DataTemplate>
+
+                </phone:Pivot.HeaderTemplate>
+
+                <phone:PivotItem Header="EXPLORE">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <phone:LongListSelector ItemsSource="{Binding}" x:Name="llsPods"
+                                                ItemTemplate="{StaticResource podListItemTemplate}"
+                                                Grid.Row="0" 
+                                                GroupHeaderTemplate="{StaticResource podHeaderTemplate}"
+                                                SelectionChanged="LlsPods_OnSelectionChanged">
+                        </phone:LongListSelector>
+
+                    </Grid>
+
+                </phone:PivotItem>
+
+                <phone:PivotItem Header="MY PODS">
+
+                    <StackPanel>
+
+                        <StackPanel Orientation="Vertical" Visibility="{Binding NoFavouritesVisibility}">
+
+                            <TextBlock toolkit:SlideInEffect.LineIndex="1" Style="{StaticResource AboutFont}" Text="Your favourite pods will appear on this screen." Margin="12,20,12,0" />
+
+                            <Grid toolkit:SlideInEffect.LineIndex="3">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Path  Data="F1 M 52.2716,27.8072C 48.9356,24.164 42.0671,25.7204 38.0992,31.3618C 33.0737,25.3024 27.0713,24.164 23.7257,27.8072C 14.4142,37.9485 34.3451,52.5246 37.9599,54.1634L 38.0438,54.2109L 38.0438,54.1634C 41.6554,52.5246 61.5832,37.9485 52.2716,27.8072 Z "
+                                          StrokeLineJoin="Round"
+                                          Stretch="Uniform"   
+                                       Grid.Column="0"
+                                          StrokeThickness="1"                     
+                                          Width="60" Height="60" 
+                                          Margin="12,50,12,0" 
+                                       VerticalAlignment="Top"
+                                          RenderTransformOrigin="0.5,0.5">
+                                    <Path.Stroke>
+                                        <SolidColorBrush Color="#643B0F"></SolidColorBrush>
+                                    </Path.Stroke>
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <TransformGroup.Children>
+                                                <RotateTransform Angle="0" />
+                                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                                            </TransformGroup.Children>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+
+                                <TextBlock Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource AboutFontSmaller}" Text="Tap this on the details pages to add to 'my pods'."
+                                            Margin="12,50,12,0" />
+
+
+                            </Grid>
+
+                        </StackPanel>
+                        <phone:LongListSelector ItemsSource="{Binding}" x:Name="llsFavouritePods"
+                                                ItemTemplate="{StaticResource podListItemTemplate}"                                                
+                                                SelectionChanged="LlsPods_OnSelectionChanged"
+                                                />
+
+
+                    </StackPanel>
+                </phone:PivotItem>
+                <phone:PivotItem Header="ABOUT">
+
+                    <StackPanel Margin="12,0,12,0">
+                        <TextBlock toolkit:SlideInEffect.LineIndex="1" Style="{StaticResource AboutFont}" Text="This app is for those of us that can't function without our morning cup of coffee!" Margin="0,20,0,0" />
+                        <TextBlock toolkit:SlideInEffect.LineIndex="2" Style="{StaticResource AboutFontSmaller}" Text="Coffee Pods is not approved by, or affiliated with, Nestlé." Margin="0,20,0,0" />
+                                               
+                        <TextBlock toolkit:SlideInEffect.LineIndex="3" Style="{StaticResource AboutFontSmaller}" Text="Version 1.1" Margin="0,50,0,0" />
+                        <TextBlock toolkit:SlideInEffect.LineIndex="4" Style="{StaticResource AboutFontSmaller}" Text="Copyright 2014 My Own Limited" Margin="0,12,0,0" />
+                    </StackPanel>
+
+                </phone:PivotItem>
+
+            </phone:Pivot>
+        </Grid>
+
+        <!--Uncomment to see an alignment grid to help ensure your controls are
+            aligned on common boundaries.  The image has a top margin of -32px to
+            account for the System Tray. Set this to 0 (or remove the margin altogether)
+            if the System Tray is hidden.
+
+            Before shipping remove this XAML and the image itself.-->
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
+
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar ForegroundColor="#EDE3C9" BackgroundColor="#643B0F">
+            <shell:ApplicationBarIconButton IconUri="/Icons/light/appbar.card.png" Text="group" Click="mnuSortGroup_Click"></shell:ApplicationBarIconButton>
+            <shell:ApplicationBarIconButton IconUri="/Icons/light/appbar.sort.numeric.descending.png" Text="intensity" Click="mnuSortIntesity_Click"></shell:ApplicationBarIconButton>
+            <shell:ApplicationBarIconButton IconUri="/Icons/light/appbar.sort.alphabetical.descending.png" Text="name" Click="mnuSortName_Click"></shell:ApplicationBarIconButton>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>
